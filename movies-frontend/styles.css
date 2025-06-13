@@ -15,7 +15,7 @@ header {
     background-color: black;
     padding: 0 50px;
     height: 100%;
-    color: rgb(121, 109, 152);
+    color: rgb(37, 52, 149);
 }
 
 .logo {
@@ -51,13 +51,43 @@ header {
 
 #login-form {
     display: flex;
+    background-color: black;
+}
+
+#login-username, #login-password {
+    border: 0;
+    background-color: black;
+    color: rgb(37, 52, 149);
+    font-family: 'Sen', sans-serif;
+}
+
+#login-username::placeholder, #login-password::placeholder {
+    color: rgb(37, 52, 149);
+    font-weight: bolder;
+}
+
+#login-username:focus, #login-password:focus {
+    outline: none;
+}
+
+#login-submit-btn {
+    font-family: 'Sen', sans-serif;
+    border: 0;
+    background-color: black;
+    color: rgb(37, 52, 149);
+    width: 60px;
+}
+
+#login-submit-btn:hover {
+    font-weight: bolder;
+    
 }
 
 .sidebar {
     width: 50px;
     height: 100%;
     background-color: black;
-    color: rgb(121, 109, 152);
+    color: rgb(37, 52, 149);
     position: fixed;
     top: 0;
     display: flex;
@@ -72,7 +102,7 @@ header {
 }
 
 main {
-    background-color: rgb(73, 69, 83);
+    background-color: rgb(25, 35, 103);
     height: calc(100vh - 50px);
     margin-left: 50px;
     font-family: 'Roboto', sans-serif;

@@ -1,6 +1,4 @@
-import { getAllMovies } from './services.js';
-
-const movieList = document.querySelector('.movie-list');
+import { getAllMovies, getCurrentUserInfo, login } from './services.js';
 
 function createMovieItem(movie) {
     const item = document.createElement('div');
@@ -18,6 +16,7 @@ function createMovieItem(movie) {
 }
 
 async function renderMovies() {
+    const movieList = document.querySelector('.movie-list');
     const containerWidth = movieList.offsetWidth;
     const containerHeight = movieList.offsetHeight;
     const tempItem = createMovieItem({
@@ -42,38 +41,34 @@ async function renderMovies() {
     });
 }
 
-// async function checkLoginStatus() {
-//     const token = localStorage.getItem('token');
-//     const profileContainer = document.querySelector('.profile-container');
-//     if (!token) {
-//         profileContainer.innerHTML =
-//             profileContainer.innerHTML = `<a href="login" class="login-btn">Log In</button>"`;
-//         return;
-//     }
+async function checkLoginStatus() {
+    const token = localStorage.getItem('token');
+    const profileContainer = document.querySelector('.profile-container');
+    if (!token) {
+        profileContainer.innerHTML = profileContainer.innerHTML = `
+            <form id="login-form">
+                <input id="login-username" type="text" placeholder="Username" required>
+                <input id="login-password" type="password" placeholder="******" required>
+                <button id="login-submit-btn" type="submit">Log In</button>
+            </form>`;
+        document.getElementById('login-form').addEventListener('submit', login);
+        return;
+    }
 
-//     try {
-//         const userInfoResponse = await fetch(
-//             `${CONFIG.API_BASE_URL}/users/me`,
-//             {
-//                 headers: {
-//                     Authorization: `Bearer ${token}`,
-//                 },
-//             }
-//         );
-//         if (!userInfoResponse.ok) {
-//             throw new Error('Not logged in');
-//         }
-
-//         const userData = await userInfoResponse.json();
-//         profileContainer.innerHTML = `<span>Hello, ${userData.username}</span>`;
-//     } catch {
-//         profileContainer.innerHTML = `<button class="login-btn">Log In</>"`;
-//     }
-
-//     profileContainer.innerHTML = `<span>Hello, ${token.username}`;
-// }
+    try {
+        const { username } = await getCurrentUserInfo(token);
+        profileContainer.innerHTML = `<span>Hello, ${username}</span>`;
+    } catch {
+        profileContainer.innerHTML = profileContainer.innerHTML = `
+            <form id="login-form">
+                <input id="login-username" type="text" placeholder="Username" required>
+                <input id="login-password" type="password" placeholder="******" required>
+                <button id="login-submit-btn" type="submit">Log In</button>
+            </form>`;
+    }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     renderMovies();
-    // checkLoginStatus();
+    checkLoginStatus();
 });

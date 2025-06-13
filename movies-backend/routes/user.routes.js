@@ -13,7 +13,7 @@ const {
 } = require('../middlewares/validators/user.validator');
 const protect = require('../middlewares/auth.middleware');
 
-router.get('/login', validateUserMiddleware, login);
+router.post('/login', validateUserMiddleware, login);
 router.post('/signup', validateUserMiddleware, signup);
 
 router.get('/me', protect, getUserData);
