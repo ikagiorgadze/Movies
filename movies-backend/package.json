@@ -1,0 +1,24 @@
+{
+    "name": "movies-backend",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "serve": "node index.js",
+        "dev": "nodemon -L -P 3000 index.js",
+        "dev:debug": "nodemon -L -P 3000 --inspect-brk=0.0.0.0:9229 --signal SIGINT --nolazy index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^5.1.0",
+        "joi": "^17.13.3",
+        "jsonwebtoken": "^9.0.2",
+        "mongodb": "^6.17.0",
+        "mongoose": "^8.15.1",
+        "nodemon": "^3.1.10"
+    }
+}
