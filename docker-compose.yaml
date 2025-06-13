@@ -1,0 +1,50 @@
+services:
+    mongodb:
+        image: mongo
+        container_name: movies_database
+        ports:
+            - 27017:27017
+        volumes:
+            - mongodb_data:/data/db
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: ${MONGO_LOCAL_USERNAME}
+            MONGO_INITDB_ROOT_PASSWORD: ${MONGO_LOCAL_PASSWORD}
+        restart: always
+
+    backend:
+        build:
+            context: ./movies-backend
+            dockerfile: Dockerfile
+        container_name: movies_backend
+        ports:
+            - ${PORT}:${PORT}
+            - 9229:9229
+        volumes:
+            - ./movies-backend:/app
+            - /app/node_modules
+        environment:
+            NODE_ENV: ${NODE_ENV}
+            MONGO_URI_LOCAL: ${MONGO_URI_LOCAL}
+            MONGO_URI_ATLAS: ${MOGNO_URI_ATLAS}
+            PORT: ${PORT}
+            JWT_SECRET: ${JWT_SECRET}
+            JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+        depends_on:
+            - mongodb
+        command: 'npm run dev'
+        restart: on-failure
+
+    frontend:
+        build:
+            context: ./movies-frontend
+            dockerfile: Dockerfile
+        container_name: movies_frontend
+        ports:
+            - '8080:80'
+        volumes:
+            - ./movies-frontend:/app
+        depends_on:
+            - backend
+        restart: on-failure
+volumes:
+    mongodb_data:
